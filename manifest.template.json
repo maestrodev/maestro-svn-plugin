@@ -1,0 +1,100 @@
+{
+  "tasks": [{
+    "name": "svn checkout",
+    "description": "Checkout A Subversion Repository",
+    "license": "Apache 2.0",
+    "author":  "MaestroDev",
+    "version": "updated at build time",
+    "class":   "MaestroDev::SvnWorker",
+    "type":    "ruby",
+    "dependencies":[
+    ],
+    "task":{
+      "command": "/svn/checkout",
+      "inputs": {
+        "path": {
+          "description": "Local Path For Checkout. By default agent's $HOME/wc/composition_name-id and can be referred to with #{fields[:scm_path]} or #{fields[:svn_path]}",
+          "required": false,
+          "type": "String",
+          "value": null
+        },
+        "url": {
+          "description": "Remote Repository Url",
+          "required": true,
+          "type": "Url",
+          "value": null
+        },
+        "options": {
+          "description": "SVN Options",
+          "required": false,
+          "type": "String",
+          "value": null
+        },
+        "clean_working_copy": {
+          "description": "Remove Local Files Before Checkout",
+          "required": false,
+          "type": "Boolean",
+          "value": false
+        },
+        "force_build": {
+          "description": "Build If No Update Is Found",
+          "required": false,
+          "type": "Boolean",
+          "value": false
+        }
+      },
+      "outputs": {"output" : {"type" : "String"}},
+      "tool_name": "SCM",
+      "icon": "svn.png"
+    }
+  },
+  {
+    "name": "svn copy",
+    "description": "Copy A Subversion Folder From Source To Destination",
+    "license": "Apache 2.0",
+    "author":  "MaestroDev",
+    "version": "updated at build time",
+    "class":   "MaestroDev::SvnWorker",
+    "type":    "ruby",
+    "dependencies":[
+    ],
+    "task":{
+      "command": "/svn/copy",
+      "inputs": {
+        "source": {
+          "description": "Path To The Source Working Copy (file|url)",
+          "required": true,
+          "type": "String",
+          "value": ""
+        },
+        "revision": {
+          "description": "The Revision Number To Be Used For Copy",
+          "required": false,
+          "type": "String",
+          "value": ""
+        },
+        "destination": {
+          "description": "Repository Location For Copy",
+          "required": true,
+          "type": "String",
+          "value": ""
+        },
+        "message": {
+          "description": "Commit Message",
+          "required": false,
+          "type": "String",
+          "value": ""
+        },
+        "options": {
+          "description": "Subversion Options",
+          "required": false,
+          "type": "String",
+          "value": ""
+        }
+      },
+      "type": "remote",
+      "tool_name": "SCM",
+      "icon": "svn.png"
+    }
+  }]
+}
