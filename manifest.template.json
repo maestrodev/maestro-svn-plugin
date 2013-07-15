@@ -93,6 +93,7 @@
         }
       },
       "type": "remote",
+      "outputs": {},
       "tool_name": "SCM",
       "icon": "svn.png"
     }
