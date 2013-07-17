@@ -36,10 +36,11 @@ module MaestroDev
         write_output("\nChecking Out repo - #{@url} to #{@path}\n", :buffer => true)
 
         checkout_script =<<-CHECKOUT
-#{@environment.empty? ? "": "#{Maestro::Util::Shell::ENV_EXPORT_COMMAND} #{environment} &&" } #{@executable} #{command} --non-interactive --trust-server-cert #{@options} #{args}
+#{@env}#{@executable} #{command} --non-interactive --trust-server-cert #{@options} #{args}
 CHECKOUT
       
         shell = Maestro::Util::Shell.new
+        write_output("\nRunning command:\n----------\n#{checkout_script.chomp}\n----------\n")
         shell.create_script(checkout_script)
         shell.run_script_with_delegate(self, :on_output)
 
@@ -63,10 +64,9 @@ CHECKOUT
         Maestro.log.warn("Error executing SVN Checkout Task: #{e.class} #{e}: " + e.backtrace.join("\n"))
       end
         
-      write_output "\n\nSVN CHECKOUT task complete"
+      write_output "\n\nSVN CHECKOUT task complete\n"
       set_error(@error) if @error
     end
-
 
     def copy
       write_output("\nStarting SVN COPY task...\n", :buffer => true)
@@ -88,10 +88,11 @@ CHECKOUT
         command_string = command_string + " -m '#{@message}'" unless @message.empty?
 
         copy_script =<<-COPY
-#{@environment.empty? ? "": "#{Maestro::Util::Shell::ENV_EXPORT_COMMAND} #{@environment} &&" } #{@executable} copy #{@options} #{command_string}
+#{@env}#{@executable} copy #{@options} #{command_string}
 COPY
     
         shell = Maestro::Util::Shell.new
+        write_output("\nRunning command:\n----------\n#{copy_script.chomp}\n----------\n")
         shell.create_script(copy_script)
         shell.run_script_with_delegate(self, :on_output)
 
@@ -103,11 +104,11 @@ COPY
         Maestro.log.warn("Error executing SVN Checkout Task: #{e.class} #{e}: " + e.backtrace.join("\n"))
       end
 
-      write_output "\n\nSVN CHECKOUT task complete"
+      write_output "\n\nSVN CHECKOUT task complete\n"
       set_error(@error) if @error
     end
 
-    def on_output(text, is_stderr)
+    def on_output(text)
       write_output(text, :buffer => true)
     end
 
@@ -146,6 +147,7 @@ COPY
       @executable = get_field('executable', 'svn')
       @environment = get_field('environment', '')
       @options = get_field('options', '')
+      @env = @environment.empty? ? "" : "#{Maestro::Util::Shell::ENV_EXPORT_COMMAND} #{@environment.gsub(/(&&|[;&])\s*$/, '')} && "
 
       errors << 'svn not installed (or not on path)' if !valid_executable?(@executable)
 
