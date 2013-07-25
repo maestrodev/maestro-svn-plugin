@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe MaestroDev::SvnWorker do
+describe MaestroDev::SvnPlugin::SvnWorker do
 
   before(:all) do
     Maestro::MaestroWorker.mock!
