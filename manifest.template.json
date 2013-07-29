@@ -5,7 +5,7 @@
     "license": "Apache 2.0",
     "author":  "MaestroDev",
     "version": "updated at build time",
-    "class":   "MaestroDev::SvnPlugin::SvnWorker",
+    "class":   "MaestroDev::Plugin::SvnWorker",
     "type":    "ruby",
     "dependencies":[
     ],
@@ -54,7 +54,7 @@
     "license": "Apache 2.0",
     "author":  "MaestroDev",
     "version": "updated at build time",
-    "class":   "MaestroDev::SvnPlugin::SvnWorker",
+    "class":   "MaestroDev::Plugin::SvnWorker",
     "type":    "ruby",
     "dependencies":[
     ],
