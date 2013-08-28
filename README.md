@@ -1,5 +1,6 @@
 maestro-svn-plugin
 ====================
+[![Code Climate](https://codeclimate.com/github/maestrodev/maestro-svn-plugin.png)](https://codeclimate.com/github/maestrodev/maestro-svn-plugin)
 
 A Maestro Plugin that allows execution of subversion commands
 
