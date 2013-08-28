@@ -1,4 +1,5 @@
 {
+  "image": "svn.png",
   "tasks": [{
     "name": "svn checkout",
     "description": "Checkout A Subversion Repository",

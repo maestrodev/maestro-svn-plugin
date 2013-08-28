@@ -10,8 +10,6 @@ module MaestroDev
       def checkout
         validate_checkout_parameters
 
-        Maestro.log.info "Inputs:\n  path =       #{@path}\n  url =        #{@url}\n  options =     #{@options}"
-
         # save the path for later tasks
         set_field('scm_path', @path)
         set_field('svn_path', @path)
@@ -47,19 +45,13 @@ CHECKOUT
         save_output_value('commit_id', local_rev)  # Same as revision, but name should be consistent with other VCS
 
         if !latest_rev.nil? and !latest_rev.empty? and latest_rev == local_rev and !get_field('force_build')
-          write_output "\nRevision From Previous Build #{latest_rev} Equals Latest From Repo #{local_rev} Build Not Needed"
+          write_output "\nRevision From Previous Build #{latest_rev} Equals Latest From Repo #{local_rev} - Build Not Needed"
           not_needed
         end
       end
 
       def copy
         validate_copy_parameters
-
-        Maestro.log.info "Inputs:\n" \
-          "  source =      #{@source}\n" \
-          "  revision =    #{@revision}\n" \
-          "  destination = #{@destination}" \
-          "  message =     #{@message}"
 
         write_output("\nsvn copying #{@source}  revision: #{@revision} to #{@destination} with the message '#{@message}'\n", :buffer => true)
 
@@ -95,24 +87,6 @@ COPY
         File.expand_path("~/wc/#{s}-#{get_field('composition_id', '')}")
       end
 
-      def booleanify(value)
-        res = false
-
-        if value
-          if value.is_a?(TrueClass) || value.is_a?(FalseClass)
-            res = value
-          elsif value.is_a?(Fixnum)
-            res = value != 0
-          elsif value.respond_to?(:to_s)
-            value = value.to_s.downcase
-
-            res = (value == 't' || value == 'true')
-          end
-        end
-
-        res
-      end
-
       def validate_common_parameters
         errors = []
 
@@ -133,8 +107,8 @@ COPY
         save_output_value('repo_path', @path)
 
         @url = get_field('url', '')
-        @clean_working_copy = booleanify(get_field('clean_working_copy', false))
-        @force_build = booleanify(get_field('force_build', false))
+        @clean_working_copy = get_boolean_field('clean_working_copy')
+        @force_build = get_boolean_field('force_build')
 
         errors << 'no svn url specified' if @url.empty?
 
