@@ -98,5 +98,14 @@
       "tool_name": "SCM",
       "icon": "svn.png"
     }
-  }]
+  }],
+  "source_types": [
+    {
+      "name": "Subversion",
+      "options": {
+        "path": "String",
+        "url": "String"
+      }
+    }
+  ]
 }
