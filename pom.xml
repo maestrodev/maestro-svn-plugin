@@ -4,7 +4,7 @@
 
   <groupId>com.maestrodev.maestro.plugins</groupId>
   <artifactId>maestro-svn-plugin</artifactId>
-  <version>1.2</version>
+  <version>1.3-SNAPSHOT</version>
   <name>maestro-svn-plugin</name>
   <packaging>pom</packaging>
 
